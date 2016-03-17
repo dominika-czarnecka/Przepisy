@@ -13,7 +13,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var danieID: Int!
     let tableView1 = UITableView.init()
     var danie: Danie!
-    var clik: Bool = false
+    let section = [1,2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,25 +47,43 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView1.deselectRowAtIndexPath(indexPath, animated: true)
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        if clik == false {
+        if (cell!.imageView?.image == UIImage.init(named: "circle-2.png")) {
             cell!.imageView?.image = UIImage.init(named: "circle.png")
         }else{
             cell!.imageView?.image = UIImage.init(named: "circle-2.png")
         }
-        clik = !clik
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.section.count
+    }
+    
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1{
+            return "Sprzet"
+        }else{
+            return "Sklad"
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1{
         return danie.danieSprzet.count
+        }else{
+         return danie.danieSklad.count
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
-        cell.textLabel?.text = danie.danieSprzet[indexPath.row]
+        //if UITableView.section == 1{
+            cell.textLabel?.text = danie.danieSprzet[indexPath.row]
+        /*}else{
+            cell.textLabel?.text = danie.danieSklad[indexPath.row]
+        }
+*/
         cell.imageView?.image = UIImage.init(named: "circle-2.png")
         return cell
     }
@@ -75,14 +93,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
