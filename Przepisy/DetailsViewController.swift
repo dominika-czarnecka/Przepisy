@@ -11,13 +11,16 @@ import UIKit
 class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
 
     var danieID: Int!
-    var data: NSArray!
     let tableView1 = UITableView.init()
+    var danie: Danie!
+    var clik: Bool = false
+    var cell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
-        self.navigationItem.title = (data.objectAtIndex(danieID) as? Danie)?.danieTytul!
+        
+        self.navigationItem.title = danie.danieTytul!
         
         tableView1.translatesAutoresizingMaskIntoConstraints = false
         tableView1.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identyfikator")
@@ -25,11 +28,11 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView1.dataSource = self
         
         let obrazek = UIImageView.init()
-        obrazek.image = UIImage.init(named: ((data.objectAtIndex(danieID) as? Danie)?.danieImg)!)
+        obrazek.image = UIImage.init(named: danie.danieImg!)
         obrazek.translatesAutoresizingMaskIntoConstraints = false
     
         let opis = UITextView.init()
-        opis.text = (data.objectAtIndex(danieID) as? Danie)?.danieOpis!
+        opis.text = danie.danieOpis!
         opis.font = UIFont.systemFontOfSize(20)
         opis.translatesAutoresizingMaskIntoConstraints = false
         
@@ -43,11 +46,13 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let dvc = DetailsViewController()
-        dvc.danieID = indexPath.row
-        dvc.data = data
-        self.navigationController?.pushViewController(dvc, animated: true)
+        tableView1.deselectRowAtIndexPath(indexPath, animated: true)
+        if clik == false {
+            cell.imageView?.image = UIImage.init(named: "circle.png")
+        }else{
+            cell.imageView?.image = UIImage.init(named: "circle-2.png")
+        }
+        clik = !clik
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -55,12 +60,13 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ((data.objectAtIndex(danieID) as? Danie)?.danieSprzet.count)!
+        return danie.danieSprzet.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
-        cell.textLabel?.text = (data.objectAtIndex(indexPath.row) as? Danie)?.danieSprzet[indexPath.row]
+        cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
+        cell.textLabel?.text = danie.danieSprzet[indexPath.row]
+        cell.imageView?.image = UIImage.init(named: "circle-2.png")
         return cell
     }
 
@@ -68,10 +74,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func tableViewCell(tableViewCell: UITableViewCell, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
     }
     /*
     // MARK: - Navigation

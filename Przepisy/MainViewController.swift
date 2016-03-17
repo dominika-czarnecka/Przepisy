@@ -15,7 +15,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        data = [Danie.init(img: "jajecznica.jpg", opis: "I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!", tytul: "jajecznica", sklad: ["jajka", "mleko", "maslo"], sprzet: ["patelnia", "miska"]), Danie.init(img: "pizza.jpg", opis: "PIZZA!!!", tytul: "pizza", sklad: ["ciasto", "ser", "sos"], sprzet:["blacha", "nóź"])]
+        data = [Danie.init(img: "jajecznica.jpg", opis: "I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!I'm looking for behavior similar to Objective-C's +(void)initialize class method, in that the method is called once when the class is initialized, and never again thereafter.\nA simple class init () {} in a class closure would be really sleek! And obviously when we get to use class vars instead of static vars in a struct closure, this will all match really well!", tytul: "jajecznica", sklad: ["jajka", "mleko", "maslo"], sprzet: ["patelnia", "miska", "talerz"]), Danie.init(img: "pizza.jpg", opis: "PIZZA!!!", tytul: "pizza", sklad: ["ciasto", "ser", "sos"], sprzet:["blacha", "nóź"])]
         
         
         view.backgroundColor = UIColor.whiteColor()
@@ -38,7 +38,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
      tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let dvc = DetailsViewController()
         dvc.danieID = indexPath.row
-        dvc.data = data
+        dvc.danie = data.objectAtIndex(indexPath.row) as! Danie
         self.navigationController?.pushViewController(dvc, animated: true)
     }
     
