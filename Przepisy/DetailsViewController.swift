@@ -14,7 +14,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     let tableView1 = UITableView.init()
     var danie: Danie!
     var clik: Bool = false
-    var cell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +46,11 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView1.deselectRowAtIndexPath(indexPath, animated: true)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
         if clik == false {
-            cell.imageView?.image = UIImage.init(named: "circle.png")
+            cell!.imageView?.image = UIImage.init(named: "circle.png")
         }else{
-            cell.imageView?.image = UIImage.init(named: "circle-2.png")
+            cell!.imageView?.image = UIImage.init(named: "circle-2.png")
         }
         clik = !clik
     }
@@ -64,7 +64,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
+       let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
         cell.textLabel?.text = danie.danieSprzet[indexPath.row]
         cell.imageView?.image = UIImage.init(named: "circle-2.png")
         return cell
