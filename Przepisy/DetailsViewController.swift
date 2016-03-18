@@ -13,7 +13,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var danieID: Int!
     let tableView1 = UITableView.init()
     var danie: Danie!
-    let section = [1,2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,25 +22,29 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView1.translatesAutoresizingMaskIntoConstraints = false
         tableView1.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identyfikator")
+        tableView1.registerClass(UITableViewCell.self, forCellReuseIdentifier: "opis")
         tableView1.delegate = self
         tableView1.dataSource = self
         
-        let obrazek = UIImageView.init()
-        obrazek.image = UIImage.init(named: danie.danieImg!)
-        obrazek.translatesAutoresizingMaskIntoConstraints = false
-    
-        let opis = UITextView.init()
-        opis.text = danie.danieOpis!
-        opis.font = UIFont.systemFontOfSize(20)
-        opis.translatesAutoresizingMaskIntoConstraints = false
+        tableView1.registerNib(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ImageTableViewCell")
+        
+//        let obrazek = UIImageView.init()
+//        obrazek.image = UIImage.init(named: danie.danieImg!)
+//        obrazek.translatesAutoresizingMaskIntoConstraints = false
+//    
+//        let opis = UITextView.init()
+//        opis.text = danie.danieOpis!
+//        opis.font = UIFont.systemFontOfSize(20)
+//        opis.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(tableView1)
-        view.addSubview(obrazek)
-        view.addSubview(opis)
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[obr(==300)][table1][opis]|", options: [], metrics: nil, views: ["obr":obrazek, "opis":opis, "table1":tableView1]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[obr]|", options: [], metrics: nil, views: ["obr":obrazek]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[table1]|", options: [], metrics: nil, views: ["table1":tableView1]))
+        
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[table1]|", options: [], metrics: nil, views: ["table1":tableView1]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[opis]|", options: [], metrics: nil, views: ["opis":opis]))
+        
+        tableView1.estimatedRowHeight = 44.0
+        tableView1.rowHeight = UITableViewAutomaticDimension
+        
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -55,39 +58,74 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.section.count
+        return 3
     }
     
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1{
+        switch section{
+        case 2:
             return "Sprzet"
-        }else{
+        case 1:
             return "Sklad"
+        default:
+            return nil
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1{
-        return danie.danieSprzet.count
-        }else{
-         return danie.danieSklad.count
+        switch section{
+        case 2:
+            return danie.danieSprzet.count
+        case 1:
+            return danie.danieSklad.count
+        case 0:
+            return 2
+        default:
+            return 0
         }
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 0{
+            if indexPath.row == 0{
+                let cell = tableView.dequeueReusableCellWithIdentifier("ImageTableViewCell", forIndexPath: indexPath) as? ImageTableViewCell
+                
+                cell?.awakeFromNib()
+                cell?.imageV.image = UIImage.init(named: danie.danieImg!)
+                return cell!
+            }
+            if indexPath.row == 1{
+                let cell = tableView.dequeueReusableCellWithIdentifier("opis", forIndexPath: indexPath)
+                cell.textLabel?.lineBreakMode = .ByWordWrapping
+                cell.textLabel?.numberOfLines = 0
+                cell.textLabel?.text = danie.danieOpis
+                return cell
+            }
+        }
+        
        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
-        //if UITableView.section == 1{
+        if indexPath.section == 1{
             cell.textLabel?.text = danie.danieSprzet[indexPath.row]
-        /*}else{
+        }else{
             cell.textLabel?.text = danie.danieSklad[indexPath.row]
         }
-*/
+
         cell.imageView?.image = UIImage.init(named: "circle-2.png")
         return cell
     }
 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0{
+            if indexPath.row == 0{
+                return 240
+            }else{
+                return UITableViewAutomaticDimension
+            }
+        }
+        return 44
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
