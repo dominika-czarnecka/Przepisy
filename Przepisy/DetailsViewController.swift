@@ -13,12 +13,21 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var danieID: Int!
     let tableView1 = UITableView.init()
     var danie: Danie!
+    let gotuj = UIButton.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
         
         self.navigationItem.title = danie.danieTytul!
+        
+        gotuj.translatesAutoresizingMaskIntoConstraints = false
+        gotuj.setTitle("GOTUJ", forState: .Normal)
+        gotuj.titleLabel?.font = UIFont.boldSystemFontOfSize(30)
+        gotuj.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        gotuj.setTitleColor(UIColor.darkTextColor(), forState: .Highlighted)
+        gotuj.backgroundColor = UIColor(hue:0.25, saturation:0.56, brightness:0.73, alpha:1)
+        gotuj.addTarget(self, action: "buttonAction", forControlEvents: .TouchUpInside)
         
         tableView1.translatesAutoresizingMaskIntoConstraints = false
         tableView1.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identyfikator")
@@ -28,19 +37,11 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView1.registerNib(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ImageTableViewCell")
         
-//        let obrazek = UIImageView.init()
-//        obrazek.image = UIImage.init(named: danie.danieImg!)
-//        obrazek.translatesAutoresizingMaskIntoConstraints = false
-//    
-//        let opis = UITextView.init()
-//        opis.text = danie.danieOpis!
-//        opis.font = UIFont.systemFontOfSize(20)
-//        opis.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.addSubview(gotuj)
         view.addSubview(tableView1)
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[table1]|", options: [], metrics: nil, views: ["table1":tableView1]))
-        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(space)-[table1][gotuj(==60)]|", options: [], metrics: ["space":(self.navigationController?.navigationBar.frame.height)! + 20], views: ["table1":tableView1, "gotuj":gotuj]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[table1]|", options: [], metrics: nil, views: ["table1":tableView1]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[gotuj]|", options: [], metrics: nil, views: ["gotuj":gotuj]))
         
         tableView1.estimatedRowHeight = 44.0
         tableView1.rowHeight = UITableViewAutomaticDimension
@@ -106,7 +107,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
-        if indexPath.section == 1{
+        if indexPath.section == 2{
             cell.textLabel?.text = danie.danieSprzet[indexPath.row]
         }else{
             cell.textLabel?.text = danie.danieSklad[indexPath.row]
@@ -125,6 +126,16 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         return 44
+    }
+    
+    
+    func buttonAction(){
+        let vc = gotujController()
+        let nc = UINavigationController.init(rootViewController: vc)
+        vc.kroki = danie.daniePrzepis
+        self.presentViewController(nc, animated: true) { () -> Void in
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {

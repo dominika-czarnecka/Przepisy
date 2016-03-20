@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1456587C1C9C5773004195CA /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1456587A1C9C5773004195CA /* ImageTableViewCell.swift */; };
 		1456587D1C9C5773004195CA /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1456587B1C9C5773004195CA /* ImageTableViewCell.xib */; };
+		145658851C9DA0A7004195CA /* gotujController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145658841C9DA0A7004195CA /* gotujController.swift */; };
 		15C063B61C95BAF3003C65C6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C063B51C95BAF3003C65C6 /* DetailsViewController.swift */; };
 		15C063BC1C95CB19003C65C6 /* Danie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C063BB1C95CB19003C65C6 /* Danie.swift */; };
 		15DBB7B61C93610700CE51BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DBB7B51C93610700CE51BE /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		1456587A1C9C5773004195CA /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		1456587B1C9C5773004195CA /* ImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
+		145658841C9DA0A7004195CA /* gotujController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gotujController.swift; sourceTree = "<group>"; };
 		15C063B51C95BAF3003C65C6 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		15C063BB1C95CB19003C65C6 /* Danie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Danie.swift; sourceTree = "<group>"; };
 		15DBB7B21C93610700CE51BE /* Przepisy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Przepisy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 				15DBB7C11C93610700CE51BE /* Info.plist */,
 				15DBB7E31C93615500CE51BE /* MainViewController.swift */,
 				15C063B51C95BAF3003C65C6 /* DetailsViewController.swift */,
+				145658841C9DA0A7004195CA /* gotujController.swift */,
 				15C063BB1C95CB19003C65C6 /* Danie.swift */,
 				1456587E1C9C5790004195CA /* ImageTVC */,
 			);
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15DBB7B61C93610700CE51BE /* AppDelegate.swift in Sources */,
+				145658851C9DA0A7004195CA /* gotujController.swift in Sources */,
 				15DBB7E41C93615500CE51BE /* MainViewController.swift in Sources */,
 				1456587C1C9C5773004195CA /* ImageTableViewCell.swift in Sources */,
 				15C063B61C95BAF3003C65C6 /* DetailsViewController.swift in Sources */,
