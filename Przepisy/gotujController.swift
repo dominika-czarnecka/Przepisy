@@ -15,6 +15,7 @@ class gotujController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 //        var counter:Int = 0
 //
 //        let progress = UIProgressView.init()
@@ -52,16 +53,24 @@ class gotujController: UIViewController {
         let v = UIView.init(frame: CGRect.init(x: view.bounds.width * CGFloat(pageNumber), y: 0, width: view.bounds.width, height: view.bounds.height))
         self.navigationItem.title = kroki[pageNumber].tytul
         if kroki[pageNumber].czas == 0{
-                let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
-                let vdes = UILabel.init()
-                vdes.lineBreakMode = .ByWordWrapping
-                vdes.numberOfLines = 0
-                vdes.text = kroki[pageNumber].opis
-                v.addSubview(vimg)
-                v.addSubview(vdes)
-                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes]))
-                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
-                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[desc]|", options: [], metrics: nil, views: ["desc":vdes]))
+            let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
+            let vdes = UILabel.init()
+            vdes.lineBreakMode = .ByWordWrapping
+            vdes.numberOfLines = 0
+            vdes.text = kroki[pageNumber].opis
+            vdes.textAlignment = .Natural
+            
+            vdes.font = UIFont.systemFontOfSize(30)
+         
+            
+            vimg.translatesAutoresizingMaskIntoConstraints = false
+            vdes.translatesAutoresizingMaskIntoConstraints = false
+            v.addSubview(vimg)
+            v.addSubview(vdes)
+            
+            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes]))
+            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
+            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[desc]|", options: [], metrics: nil, views: ["desc":vdes]))
             
         }
         
