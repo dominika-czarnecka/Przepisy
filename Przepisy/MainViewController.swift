@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 sprzet: ["patelnia", "miska", "talerz"],
                 przepis:[
                     krokPrzepisu.init(tytul: "1", obraz: "jajecznica.jpg", czas: 0, opis: "jaja1"),
-                    krokPrzepisu.init(tytul: "2", obraz: "", czas: 3, opis: "jaja2")]
+                    krokPrzepisu.init(tytul: "2", obraz: "", czas: 3 * 60, opis: "jaja2")]
             ),
             Danie.init(
                 img: "pizza.jpg",
