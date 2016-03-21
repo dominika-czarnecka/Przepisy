@@ -23,7 +23,7 @@ class gotujController: UIViewController {
 //        progress.setProgress(fractionalProgress, animated: animated)
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
         
-        pagecount = kroki.count + 1
+        pagecount = kroki.count //+ 1
         view.backgroundColor = UIColor.whiteColor()
         
         let scrollView = UIScrollView.init()
@@ -34,22 +34,36 @@ class gotujController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[scroll]|", options: [], metrics: nil, views: ["scroll":scrollView]))
         
         
-        let v = UIView.init(frame: CGRect.init(x: 180, y: 60, width: 350, height: 80))
-        v.backgroundColor = UIColor.redColor()
-        scrollView.addSubview(v)
+//        let v = UIView.init(frame: CGRect.init(x: 180, y: 60, width: 350, height: 80))
+//        v.backgroundColor = UIColor.redColor()
+//        scrollView.addSubview(v)
         scrollView.scrollEnabled = true
         scrollView.contentSize = CGSize.init(width: view.frame.width * CGFloat(pagecount), height: 0)
         scrollView.pagingEnabled = true
         
         for i in (0 ..< pagecount){
-            generateView(i)
+            
+            scrollView.addSubview(generateView(i))
         }
         
     }
 
     func generateView(pageNumber: Int) -> UIView{
-        let v = UIView.init(frame: CGRect.init(x: view.frame.width * CGFloat(pageNumber), y: 0, width: view.frame.width, height: view.frame.height))
-      
+        let v = UIView.init(frame: CGRect.init(x: view.bounds.width * CGFloat(pageNumber), y: 0, width: view.bounds.width, height: view.bounds.height))
+        self.navigationItem.title = kroki[pageNumber].tytul
+        if kroki[pageNumber].czas == 0{
+                let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
+                let vdes = UILabel.init()
+                vdes.lineBreakMode = .ByWordWrapping
+                vdes.numberOfLines = 0
+                vdes.text = kroki[pageNumber].opis
+                v.addSubview(vimg)
+                v.addSubview(vdes)
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[desc]|", options: [], metrics: nil, views: ["desc":vdes]))
+            
+        }
         
         return v
         
