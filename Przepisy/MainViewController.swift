@@ -23,7 +23,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 sklad: ["jajka", "mleko", "maslo"],
                 sprzet: ["patelnia", "miska", "talerz"],
                 przepis:[
-                    krokPrzepisu.init(tytul: "1", obraz: "jajecznica.jpg", czas: 0, opis: "jaja1"),
+                    krokPrzepisu.init(tytul: "1", obraz: "jajecznica.jpg", czas: 10, opis: "jaja1"),
                     krokPrzepisu.init(tytul: "2", obraz: "", czas: 3 * 60, opis: "jaja2")]
             ),
             Danie.init(
@@ -80,15 +80,5 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
