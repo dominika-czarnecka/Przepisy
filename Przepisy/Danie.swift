@@ -32,6 +32,7 @@ class krokPrzepisu: NSObject {
     var tytul: String!
     var obraz: String!
     var czas: Int!
+    var currentTime = 0
     var opis: String!
     
     init(tytul: String, obraz: String, czas: Int, opis: String){

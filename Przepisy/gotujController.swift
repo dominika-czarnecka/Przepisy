@@ -11,8 +11,6 @@ import UIKit
 class gotujController: UIViewController, UIScrollViewDelegate {
 
     var pagecount: Int!
-    var time: Int!
-    var timeNotRun: Bool = true
     var kroki: [krokPrzepisu]!
     let scrollView = UIScrollView.init()
     
@@ -105,19 +103,14 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     func tapped(sender: UITapGestureRecognizer){
         let timel = sender.view as! UILabel
         
-        timeNotRun = !timeNotRun
-        time = kroki[timel.tag].czas
-        if timeNotRun == false{
-            performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
-        }
-        
-        
+        kroki[timel.tag].currentTime = kroki[timel.tag].czas
+        performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
     }
     
     func countdown(timel: UILabel){
-        time = time - 1
-        timel.text = String(format: "%02d:%02d", arguments: [time / 60, time % 60])
-        if(time > 0){
+        kroki[timel.tag].currentTime = kroki[timel.tag].currentTime - 1
+        timel.text = String(format: "%02d:%02d", arguments: [kroki[timel.tag].currentTime / 60, kroki[timel.tag].currentTime % 60])
+        if(kroki[timel.tag].currentTime > 0){
             performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
         }
     }

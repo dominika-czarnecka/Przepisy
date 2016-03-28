@@ -28,7 +28,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         gotuj.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         gotuj.setTitleColor(UIColor.darkTextColor(), forState: .Highlighted)
         gotuj.backgroundColor = UIColor(hue:0.25, saturation:0.56, brightness:0.73, alpha:1)
-        gotuj.addTarget(self, action: "buttonAction", forControlEvents: .TouchUpInside)
+        gotuj.addTarget(self, action: #selector(DetailsViewController.buttonAction), forControlEvents: .TouchUpInside)
         
         tableView1.translatesAutoresizingMaskIntoConstraints = false
         tableView1.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identyfikator")
