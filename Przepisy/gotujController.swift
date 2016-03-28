@@ -21,7 +21,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         
         pagecount = kroki.count //+ 1
         view.backgroundColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Anuluj", style: .Plain, target: self, action: "dismissVC")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Anuluj", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
         
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +51,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         timel.text = String(format: "%02d:%02d", arguments: [Int(kroki[pageNumber].czas / 60), Int(kroki[pageNumber].czas % 60)])
         timel.textAlignment = .Center
         timel.font = UIFont.boldSystemFontOfSize(50)
-        let tap = UITapGestureRecognizer.init(target: self, action: "tapped:")
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(gotujController.tapped(_:)))
         timel.userInteractionEnabled = true
         timel.addGestureRecognizer(tap)
         
@@ -108,7 +108,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         timeNotRun = !timeNotRun
         time = kroki[timel.tag].czas
         if timeNotRun == false{
-            performSelector("countdown:", withObject: timel, afterDelay: 1.0)
+            performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
         }
         
         
@@ -118,7 +118,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         time = time - 1
         timel.text = String(format: "%02d:%02d", arguments: [time / 60, time % 60])
         if(time > 0){
-            performSelector("countdown:", withObject: timel, afterDelay: 1.0)
+            performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
         }
     }
     

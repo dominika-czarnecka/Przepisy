@@ -18,21 +18,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         data = [
             Danie.init(
                 img: "jajecznica.jpg",
-                opis: "I'm looking for behavior similar to Objective-C's +(void)initialize class method, in!",
-                tytul: "jajecznica",
-                sklad: ["jajka", "mleko", "maslo"],
+                opis: "Jajecznica to jedno z najpopularniejszych dań śniadaniowych. Ja osobiście jem ją przynajmniej raz w tygodniu. Jedni lubią przygotować ją z samych jajek, inni z cebulką i boczkiem. Myślicie pewnie, że każde dziecko potrafi zrobić jajecznicę, ale czy potrafi przyrządzić jajecznicę idealną?",
+                tytul: "Jajecznica",
+                sklad: ["jajka", "mleko", "maslo", "sól", "pieprz"],
                 sprzet: ["patelnia", "miska", "talerz"],
                 przepis:[
-                    krokPrzepisu.init(tytul: "1", obraz: "jajecznica.jpg", czas: 10, opis: "jaja1"),
-                    krokPrzepisu.init(tytul: "2", obraz: "", czas: 3 * 60, opis: "jaja2")]
+                    krokPrzepisu.init(tytul: "Krok 1", obraz: "jajecznica.jpg", czas: 0, opis: "Nie przyprawiaj jajecznicy na początku, ale dopiero przed samym podaniem. Jeżeli dodasz sól na początku smażenia, jajecznica będzie bardziej wodnista i trudno będzie osiągnąć idealną konsystencję."),
+                    krokPrzepisu.init(tytul: "Krok 2", obraz: "", czas: 3 * 60, opis: "Smażenie jajecznicy rozpocznij na zimnej patelni i na małym ogniu – nie idź na skróty.")]
             ),
             Danie.init(
                 img: "pizza.jpg",
-                opis: "PIZZA!!!",
-                tytul: "pizza",
-                sklad: ["ciasto", "ser", "sos"],
-                sprzet:["blacha", "nóź"],
-                przepis:[]
+                opis: "Potrawa kuchni włoskiej, obecnie szeroko rozpowszechniona na całym świecie. W wersji podstawowej jest to płaski placek z wytrawnego ciasta makaronowego, znacznie później zaczęto także używać ciasta drożdżowego (focaccia), posmarowany sosem pomidorowym, posypany tartym serem mozzarella i ziołami, pieczony w bardzo mocno nagrzanym piecu. Pizzę podaje się na gorąco, lecz rozpowszechnione jest jedzenie jej również na zimno.",
+                tytul: "Pizza",
+                sklad: ["ketchup", "sos czosnkowy"],
+                sprzet:["telefon", "numer do pizzerii"],
+                przepis:[
+                    krokPrzepisu.init(tytul: "Krok 1", obraz: "pizza.jpg", czas: 0, opis: "Wybierz na telefonie numer do pizzerii"),
+                    krokPrzepisu.init(tytul: "Krok 2", obraz: "", czas: 0, opis: "Zamów wybraną pizzę"),
+                    krokPrzepisu.init(tytul: "Krok 3", obraz: "", czas: 40 * 60, opis: "Czekaj")]
             )]
         
         
