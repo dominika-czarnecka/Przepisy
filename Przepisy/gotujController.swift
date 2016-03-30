@@ -132,14 +132,29 @@ class gotujController: UIViewController, UIScrollViewDelegate {
             performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
         }else{
             kroki[timel.tag].countingdown = false
-            let systemSoundID: SystemSoundID = 1016
-            if #available(iOS 8.0, *) {
-                let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-            AudioServicesPlaySystemSound(systemSoundID)     
+            alarm(timel)
         }
+    }
+    
+    func alarm(timel: UILabel){
+        //var mySound: SystemSoundID = 0
+        var sound = AVAudioPlayer()
+        
+        do{
+        try sound = AVAudioPlayer.init(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("alarm", ofType: "wav")!), fileTypeHint: nil)
+             sound.play()
+        }catch{
+            print("Some problems")
+        }
+       
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                 sound.stop()
+                }))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+
     }
     
     override func didReceiveMemoryWarning() {

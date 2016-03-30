@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 sklad: ["jajka", "mleko", "maslo", "sól", "pieprz"],
                 sprzet: ["patelnia", "miska", "talerz"],
                 przepis:[
-                    krokPrzepisu.init(tytul: "Krok 1", obraz: "jajecznica.jpg", czas: 10, opis: "Nie przyprawiaj jajecznicy na początku, ale dopiero przed samym podaniem. Jeżeli dodasz sól na początku smażenia, jajecznica będzie bardziej wodnista i trudno będzie osiągnąć idealną konsystencję."),
+                    krokPrzepisu.init(tytul: "Krok 1", obraz: "jajecznica.jpg", czas: 3, opis: "Nie przyprawiaj jajecznicy na początku, ale dopiero przed samym podaniem. Jeżeli dodasz sól na początku smażenia, jajecznica będzie bardziej wodnista i trudno będzie osiągnąć idealną konsystencję."),
                     krokPrzepisu.init(tytul: "Krok 2", obraz: "", czas: 3 * 60, opis: "Smażenie jajecznicy rozpocznij na zimnej patelni i na małym ogniu – nie idź na skróty.")]
             ),
             Danie.init(
