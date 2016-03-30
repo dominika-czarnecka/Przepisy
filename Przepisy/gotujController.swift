@@ -147,13 +147,11 @@ class gotujController: UIViewController, UIScrollViewDelegate {
             print("Some problems")
         }
        
-        if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
                  sound.stop()
                 }))
             self.presentViewController(alertController, animated: true, completion: nil)
-        }
 
     }
     

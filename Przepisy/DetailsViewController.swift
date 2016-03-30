@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
 
@@ -97,7 +98,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let cell = tableView.dequeueReusableCellWithIdentifier("ImageTableViewCell", forIndexPath: indexPath) as? ImageTableViewCell
                 
                 cell?.awakeFromNib()
-                cell?.imageV.image = UIImage.init(named: danie.danieImg!)
+                cell?.imageV.sd_setImageWithURL(NSURL.init(string: danie.danieImg))
+               // cell?.imageV.image = UIImage.init(named: danie.danieImg!)
                 return cell!
             }
             if indexPath.row == 1{

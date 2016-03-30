@@ -18,7 +18,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         data = [
             Danie.init(
-                img: "jajecznica.jpg",
+                img: "http://www.festiwalbiegowy.pl/sites/default/files/main/articles/jajecznica.jpg",
                 opis: "Jajecznica to jedno z najpopularniejszych dań śniadaniowych. Ja osobiście jem ją przynajmniej raz w tygodniu. Jedni lubią przygotować ją z samych jajek, inni z cebulką i boczkiem. Myślicie pewnie, że każde dziecko potrafi zrobić jajecznicę, ale czy potrafi przyrządzić jajecznicę idealną?",
                 tytul: "Jajecznica",
                 sklad: ["jajka", "mleko", "maslo", "sól", "pieprz"],
