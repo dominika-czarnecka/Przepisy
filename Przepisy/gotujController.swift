@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class gotujController: UIViewController, UIScrollViewDelegate {
 
@@ -17,7 +18,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pagecount = kroki.count //+ 1
+        pagecount = kroki.count + 1
         view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Anuluj", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
         
@@ -42,53 +43,64 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     func generateView(pageNumber: Int) -> UIView{
         let v = UIView.init(frame: CGRect.init(x: view.bounds.width * CGFloat(pageNumber), y: 0, width: view.bounds.width, height: view.frame.height - 20 - (self.navigationController?.navigationBar.frame.height)!))
 
-        let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
-        let timel = UILabel.init()
-        timel.tag = pageNumber
-        timel.backgroundColor = UIColor(red:0.97, green:0.97, blue:1, alpha:1)
-        timel.text = String(format: "%02d:%02d", arguments: [Int(kroki[pageNumber].czas / 60), Int(kroki[pageNumber].czas % 60)])
-        timel.textAlignment = .Center
-        timel.font = UIFont.boldSystemFontOfSize(50)
-        let tap = UITapGestureRecognizer.init(target: self, action: #selector(gotujController.tapped(_:)))
-        timel.userInteractionEnabled = true
-        timel.addGestureRecognizer(tap)
+        if(pageNumber < pagecount - 1){
         
-        let vdes = UITextView.init()
-        vdes.editable = false
-        vdes.text = kroki[pageNumber].opis
-        vdes.font = UIFont.systemFontOfSize(18)
-        vdes.translatesAutoresizingMaskIntoConstraints = false
-        v.addSubview(vdes)
+            let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
+            let timel = UILabel.init()
+            timel.tag = pageNumber
+            timel.backgroundColor = UIColor(red:0.97, green:0.97, blue:1, alpha:1)
+            timel.text = String(format: "%02d:%02d", arguments: [Int(kroki[pageNumber].czas / 60), Int(kroki[pageNumber].czas % 60)])
+            timel.textAlignment = .Center
+            timel.font = UIFont.boldSystemFontOfSize(50)
+            let tap = UITapGestureRecognizer.init(target: self, action: #selector(gotujController.tapped(_:)))
+            timel.userInteractionEnabled = true
+            timel.addGestureRecognizer(tap)
         
-        if kroki[pageNumber].obraz != ""{
-            vimg.translatesAutoresizingMaskIntoConstraints = false
-            v.addSubview(vimg)
-        }
-        if kroki[pageNumber].czas != 0{
-            timel.translatesAutoresizingMaskIntoConstraints = false
-            v.addSubview(timel)
-        }
-        if kroki[pageNumber].obraz != "" && kroki[pageNumber].czas != 0{
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc][time(==90)]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes, "time":timel]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[time]|", options: [], metrics: nil, views: ["time":timel]))
-        }
-        if kroki[pageNumber].obraz == "" && kroki[pageNumber].czas != 0{
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[desc][time(==90)]|", options: [], metrics: nil, views: ["time":timel, "desc":vdes]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[time]|", options: [], metrics: nil, views: ["time":timel]))
-        }
-        if kroki[pageNumber].obraz != "" && kroki[pageNumber].czas == 0{
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
-        }
-        if kroki[pageNumber].obraz == "" && kroki[pageNumber].czas == 0{
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[desc]|", options: [], metrics: nil, views: ["desc":vdes]))
-            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
-        }
+            let vdes = UITextView.init()
+            vdes.editable = false
+            vdes.text = kroki[pageNumber].opis
+            vdes.font = UIFont.systemFontOfSize(18)
+            vdes.translatesAutoresizingMaskIntoConstraints = false
+            v.addSubview(vdes)
         
+            if kroki[pageNumber].obraz != ""{
+                vimg.translatesAutoresizingMaskIntoConstraints = false
+                v.addSubview(vimg)
+            }
+            if kroki[pageNumber].czas != 0{
+                timel.translatesAutoresizingMaskIntoConstraints = false
+                v.addSubview(timel)
+            }
+            if kroki[pageNumber].obraz != "" && kroki[pageNumber].czas != 0{
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc][time(==90)]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes, "time":timel]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[time]|", options: [], metrics: nil, views: ["time":timel]))
+            }
+            if kroki[pageNumber].obraz == "" && kroki[pageNumber].czas != 0{
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[desc][time(==90)]|", options: [], metrics: nil, views: ["time":timel, "desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[time]|", options: [], metrics: nil, views: ["time":timel]))
+            }
+            if kroki[pageNumber].obraz != "" && kroki[pageNumber].czas == 0{
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][desc]|", options: [], metrics: nil, views: ["image":vimg, "desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: [], metrics: nil, views: ["image":vimg]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
+            }
+            if kroki[pageNumber].obraz == "" && kroki[pageNumber].czas == 0{
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[desc]|", options: [], metrics: nil, views: ["desc":vdes]))
+                v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[desc]-|", options: [], metrics: nil, views: ["desc":vdes]))
+            }
+        }
+        if(pageNumber == pagecount - 1){
+            let img = UIImageView.init(image: UIImage.init(named: "bonappetit.jpg"))
+            img.translatesAutoresizingMaskIntoConstraints = false
+            img.contentMode = .ScaleAspectFit
+            v.addSubview(img)
+            v.backgroundColor = UIColor(red:0.99, green:0.97, blue:0.84, alpha:1.00)
+            v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[img]|", options: [], metrics: nil, views: ["img":img]))
+             v.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[img]|", options: [], metrics: nil, views: ["img":img]))
+        }
         return v
     }
     
@@ -97,14 +109,20 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.navigationItem.title = kroki[Int(scrollView.contentOffset.x / view.frame.width)].tytul
+        if(scrollView.contentOffset.x >= view.frame.width * CGFloat(pagecount - 1)){
+            self.navigationItem.title = "Gratuluje!"
+        }else{
+            self.navigationItem.title = kroki[Int(scrollView.contentOffset.x / view.frame.width)].tytul
+        }
     }
     
     func tapped(sender: UITapGestureRecognizer){
         let timel = sender.view as! UILabel
-        
         kroki[timel.tag].currentTime = kroki[timel.tag].czas
-        performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
+        if(kroki[timel.tag].countingdown == false){
+            performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
+            kroki[timel.tag].countingdown = true
+        }
     }
     
     func countdown(timel: UILabel){
@@ -112,6 +130,15 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         timel.text = String(format: "%02d:%02d", arguments: [kroki[timel.tag].currentTime / 60, kroki[timel.tag].currentTime % 60])
         if(kroki[timel.tag].currentTime > 0){
             performSelector(#selector(gotujController.countdown(_:)), withObject: timel, afterDelay: 1.0)
+        }else{
+            kroki[timel.tag].countingdown = false
+            let systemSoundID: SystemSoundID = 1016
+            if #available(iOS 8.0, *) {
+                let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            AudioServicesPlaySystemSound(systemSoundID)     
         }
     }
     

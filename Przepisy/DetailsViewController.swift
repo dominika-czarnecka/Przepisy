@@ -51,11 +51,13 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView1.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        if (cell!.imageView?.image == UIImage.init(named: "circle-2.png")) {
-            cell!.imageView?.image = UIImage.init(named: "circle.png")
-        }else{
-            cell!.imageView?.image = UIImage.init(named: "circle-2.png")
+        if(indexPath.section > 0){
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            if (cell!.imageView?.image == UIImage.init(named: "circle-2.png")) {
+                cell!.imageView?.image = UIImage.init(named: "circle.png")
+            }else{
+                cell!.imageView?.image = UIImage.init(named: "circle-2.png")
+            }
         }
     }
     

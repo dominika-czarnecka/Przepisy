@@ -33,6 +33,7 @@ class krokPrzepisu: NSObject {
     var obraz: String!
     var czas: Int!
     var currentTime = 0
+    var countingdown = false
     var opis: String!
     
     init(tytul: String, obraz: String, czas: Int, opis: String){
