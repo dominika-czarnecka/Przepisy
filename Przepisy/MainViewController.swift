@@ -24,11 +24,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 sklad: ["jajka", "mleko", "maslo", "sól", "pieprz"],
                 sprzet: ["patelnia", "miska", "talerz"],
                 przepis:[
-                    krokPrzepisu.init(tytul: "Krok 1", obraz: "jajecznica.jpg", czas: 3, opis: "Nie przyprawiaj jajecznicy na początku, ale dopiero przed samym podaniem. Jeżeli dodasz sól na początku smażenia, jajecznica będzie bardziej wodnista i trudno będzie osiągnąć idealną konsystencję."),
+                    krokPrzepisu.init(tytul: "Krok 1", obraz: "http://www.obmawiamy.pl/wp-content/uploads/2009/04/541564763_cea1bd29eb-400x300.jpg", czas: 3, opis: "Nie przyprawiaj jajecznicy na początku, ale dopiero przed samym podaniem. Jeżeli dodasz sól na początku smażenia, jajecznica będzie bardziej wodnista i trudno będzie osiągnąć idealną konsystencję."),
                     krokPrzepisu.init(tytul: "Krok 2", obraz: "", czas: 3 * 60, opis: "Smażenie jajecznicy rozpocznij na zimnej patelni i na małym ogniu – nie idź na skróty.")]
             ),
             Danie.init(
-                img: "pizza.jpg",
+                img: "http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg",
                 opis: "Potrawa kuchni włoskiej, obecnie szeroko rozpowszechniona na całym świecie. W wersji podstawowej jest to płaski placek z wytrawnego ciasta makaronowego, znacznie później zaczęto także używać ciasta drożdżowego (focaccia), posmarowany sosem pomidorowym, posypany tartym serem mozzarella i ziołami, pieczony w bardzo mocno nagrzanym piecu. Pizzę podaje się na gorąco, lecz rozpowszechnione jest jedzenie jej również na zimno.",
                 tytul: "Pizza",
                 sklad: ["ketchup", "sos czosnkowy"],

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SDWebImage
 
 class gotujController: UIViewController, UIScrollViewDelegate {
 
@@ -45,7 +46,9 @@ class gotujController: UIViewController, UIScrollViewDelegate {
 
         if(pageNumber < pagecount - 1){
         
-            let vimg = UIImageView.init(image: UIImage.init(named: kroki[pageNumber].obraz))
+            let vimg = UIImageView()
+            vimg.sd_setImageWithURL(NSURL.init(string: kroki[pageNumber].obraz))
+            vimg.contentMode = .ScaleAspectFit
             let timel = UILabel.init()
             timel.tag = pageNumber
             timel.backgroundColor = UIColor(red:0.97, green:0.97, blue:1, alpha:1)
@@ -93,7 +96,8 @@ class gotujController: UIViewController, UIScrollViewDelegate {
             }
         }
         if(pageNumber == pagecount - 1){
-            let img = UIImageView.init(image: UIImage.init(named: "bonappetit.jpg"))
+            let img = UIImageView()
+            img.sd_setImageWithURL(NSURL.init(string: "http://img02.deviantart.net/b976/i/2010/334/3/a/bon_appetit_by_faratiana-d33x32j.jpg"))
             img.translatesAutoresizingMaskIntoConstraints = false
             img.contentMode = .ScaleAspectFit
             v.addSubview(img)
@@ -137,12 +141,10 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     }
     
     func alarm(timel: UILabel){
-        //var mySound: SystemSoundID = 0
         var sound = AVAudioPlayer()
-        
         do{
-        try sound = AVAudioPlayer.init(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("alarm", ofType: "wav")!), fileTypeHint: nil)
-             sound.play()
+            try sound = AVAudioPlayer.init(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("alarm", ofType: "wav")!), fileTypeHint: nil)
+            sound.play()
         }catch{
             print("Some problems")
         }
