@@ -49,13 +49,16 @@ class gotujController: UIViewController, UIScrollViewDelegate {
             let vimg = UIImageView()
             vimg.sd_setImageWithURL(NSURL.init(string: kroki[pageNumber].obraz))
             vimg.contentMode = .ScaleAspectFit
+            
             let timel = UILabel.init()
             timel.tag = pageNumber
             timel.backgroundColor = UIColor(red:0.97, green:0.97, blue:1, alpha:1)
             timel.text = String(format: "%02d:%02d", arguments: [Int(kroki[pageNumber].czas / 60), Int(kroki[pageNumber].czas % 60)])
             timel.textAlignment = .Center
             timel.font = UIFont.boldSystemFontOfSize(50)
+            
             let tap = UITapGestureRecognizer.init(target: self, action: #selector(gotujController.tapped(_:)))
+            
             timel.userInteractionEnabled = true
             timel.addGestureRecognizer(tap)
         
@@ -115,6 +118,7 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if(scrollView.contentOffset.x >= view.frame.width * CGFloat(pagecount - 1)){
             self.navigationItem.title = "Gratuluje!"
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "gotowe", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
         }else{
             self.navigationItem.title = kroki[Int(scrollView.contentOffset.x / view.frame.width)].tytul
         }
@@ -149,12 +153,11 @@ class gotujController: UIViewController, UIScrollViewDelegate {
             print("Some problems")
         }
        
-            let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
-                 sound.stop()
-                }))
-            self.presentViewController(alertController, animated: true, completion: nil)
-
+        let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+            sound.stop()
+        }))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
