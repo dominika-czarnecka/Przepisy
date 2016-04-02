@@ -39,7 +39,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     krokPrzepisu.init(tytul: "Krok 3", obraz: "", czas: 40 * 60, opis: "Czekaj")]
             )]
         
-        
         view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "Przepisy"
         
@@ -59,7 +58,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
      tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let dvc = DetailsViewController()
-        dvc.danieID = indexPath.row
+        dvc.danieID2 = indexPath.row
         dvc.danie = data.objectAtIndex(indexPath.row) as! Danie
         self.navigationController?.pushViewController(dvc, animated: true)
     }

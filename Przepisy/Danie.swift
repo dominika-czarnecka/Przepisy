@@ -10,6 +10,7 @@ import UIKit
 
 class Danie: NSObject {
 
+    var danieID: String!
     var danieImg: String!
     var danieOpis:String!
     var danieTytul: String!
@@ -19,6 +20,8 @@ class Danie: NSObject {
     
     init(img: String, opis: String, tytul: String, sklad: [String], sprzet: [String], przepis: [krokPrzepisu]){
         super.init()
+        
+        danieID = String(rand())
         danieImg = img
         danieOpis = opis
         danieTytul = tytul

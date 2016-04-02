@@ -10,8 +10,9 @@ import UIKit
 import SDWebImage
 
 class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-
-    var danieID: Int!
+    
+    
+    var danieID2: Int!
     let tableView1 = UITableView.init()
     var danie: Danie!
     let gotuj = UIButton.init()
@@ -22,13 +23,16 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.backgroundColor = UIColor.whiteColor()
         
         self.navigationItem.title = danie.danieTytul!
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.navigationController?.navigationBar.barTintColor = kColorMain
+        self.navigationController?.navigationBar.tintColor = kColorWhite
         
         gotuj.translatesAutoresizingMaskIntoConstraints = false
         gotuj.setTitle("GOTUJ", forState: .Normal)
         gotuj.titleLabel?.font = UIFont.boldSystemFontOfSize(30)
         gotuj.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         gotuj.setTitleColor(UIColor.darkTextColor(), forState: .Highlighted)
-        gotuj.backgroundColor = UIColor(hue:0.25, saturation:0.56, brightness:0.73, alpha:1)
+        gotuj.backgroundColor = kColorMain
         gotuj.addTarget(self, action: #selector(DetailsViewController.buttonAction), forControlEvents: .TouchUpInside)
         
         tableView1.translatesAutoresizingMaskIntoConstraints = false
@@ -52,11 +56,24 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView1.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.section > 0){
+        if(indexPath.section == 1){
             let cell = tableView.cellForRowAtIndexPath(indexPath)
-            if (cell!.imageView?.image == UIImage.init(named: "circle-2.png")) {
+            if (defaults.boolForKey(danie.danieSklad[indexPath.row]) == false){
+                defaults.setBool(true, forKey: danie.danieSklad[indexPath.row])
                 cell!.imageView?.image = UIImage.init(named: "circle.png")
             }else{
+                defaults.setBool(false, forKey: danie.danieSklad[indexPath.row])
+                cell!.imageView?.image = UIImage.init(named: "circle-2.png")
+            }
+            print(indexPath.row, defaults.boolForKey(danie.danieSklad[indexPath.row]))
+        }
+        if(indexPath.section == 2){
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            if (defaults.boolForKey(danie.danieSprzet[indexPath.row]) == false){
+                defaults.setBool(true, forKey: danie.danieSprzet[indexPath.row])
+                cell!.imageView?.image = UIImage.init(named: "circle.png")
+            }else{
+                defaults.setBool(false, forKey: danie.danieSprzet[indexPath.row])
                 cell!.imageView?.image = UIImage.init(named: "circle-2.png")
             }
         }
@@ -115,12 +132,21 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
         if indexPath.section == 2{
             cell.textLabel?.text = danie.danieSprzet[indexPath.row]
+            if(defaults.boolForKey(danie.danieSprzet[indexPath.row]) == true){
+                cell.imageView?.image = UIImage.init(named: "circle.png")
+            }else{
+                cell.imageView?.image = UIImage.init(named: "circle-2.png")
+            }
         }else{
             cell.textLabel?.text = danie.danieSklad[indexPath.row]
-        }
+            if (defaults.boolForKey(danie.danieSklad[indexPath.row]) == true) {
+                cell.imageView?.image = UIImage.init(named: "circle.png")
+            }else{
+                cell.imageView?.image = UIImage.init(named: "circle-2.png")
+            }
 
-        cell.imageView?.image = UIImage.init(named: "circle-2.png")
-        return cell
+        }
+               return cell
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -133,7 +159,6 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         return 44
     }
-    
     
     func buttonAction(){
         let vc = gotujController()

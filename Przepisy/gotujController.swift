@@ -114,11 +114,10 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        print(Float(scrollView.contentOffset.x / view.frame.width) / Float(pagecount))
         self.navigationController?.setProgress(Float(scrollView.contentOffset.x / view.frame.width) / Float(pagecount - 1), animated: true)
         
         if(scrollView.contentOffset.x >= view.frame.width * CGFloat(pagecount - 1)){
-                self.navigationItem.title = "Gratulacje!"
+            self.navigationItem.title = "Gratulacje!"
             self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Gotowe", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init()
         }else{
@@ -153,15 +152,14 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         do{
             try sound = AVAudioPlayer.init(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("alarm", ofType: "wav")!), fileTypeHint: nil)
             sound.play()
+            let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
+                sound.stop()
+            }))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }catch{
             print("Some problems")
         }
-       
-        let alertController = UIAlertController(title: kroki[timel.tag].tytul, message: "Timeout", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
-            sound.stop()
-        }))
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
