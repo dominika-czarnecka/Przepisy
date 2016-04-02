@@ -2,13 +2,14 @@
 //  gotujController.swift
 //  Przepisy
 //
-//  Created by Maciej Matuszewski on 19.03.2016.
+//  Created by Dominika Czarnecka on 19.03.2016.
 //  Copyright © 2016 Dominika Czarnecka. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 import SDWebImage
+import KYNavigationProgress
 
 class gotujController: UIViewController, UIScrollViewDelegate {
 
@@ -21,8 +22,6 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         
         pagecount = kroki.count + 1
         view.backgroundColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Anuluj", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
-        
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.delegate = self
@@ -38,7 +37,6 @@ class gotujController: UIViewController, UIScrollViewDelegate {
         for i in (0 ..< pagecount){
             scrollView.addSubview(generateView(i))
         }
-        
     }
 
     func generateView(pageNumber: Int) -> UIView{
@@ -116,11 +114,17 @@ class gotujController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        print(Float(scrollView.contentOffset.x / view.frame.width) / Float(pagecount))
+        self.navigationController?.setProgress(Float(scrollView.contentOffset.x / view.frame.width) / Float(pagecount - 1), animated: true)
+        
         if(scrollView.contentOffset.x >= view.frame.width * CGFloat(pagecount - 1)){
-            self.navigationItem.title = "Gratuluje!"
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "gotowe", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
+                self.navigationItem.title = "Gratulacje!"
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Gotowe", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem.init()
         }else{
             self.navigationItem.title = kroki[Int(scrollView.contentOffset.x / view.frame.width)].tytul
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Anuluj", style: .Plain, target: self, action: #selector(gotujController.dismissVC))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init()
         }
     }
     

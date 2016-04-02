@@ -12,7 +12,7 @@ import UIKit
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let tableView = UITableView.init()
-    var data:NSArray! // = ["jajecznica", "pizza", "chleb", "chamburger"]
+    var data:NSArray!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -107,6 +107,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell.textLabel?.lineBreakMode = .ByWordWrapping
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.text = danie.danieOpis
+                cell.selectionStyle = .None
                 return cell
             }
         }

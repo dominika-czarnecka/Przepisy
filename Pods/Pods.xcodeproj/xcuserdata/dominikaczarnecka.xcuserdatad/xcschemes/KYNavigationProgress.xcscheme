@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8C766B05B612380AA12F6547'
-               BlueprintName = 'Pods'
+               BlueprintIdentifier = 'F3B943192EFD931F5AA747C7'
+               BlueprintName = 'KYNavigationProgress'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods.framework'>
+               BuildableName = 'KYNavigationProgress.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

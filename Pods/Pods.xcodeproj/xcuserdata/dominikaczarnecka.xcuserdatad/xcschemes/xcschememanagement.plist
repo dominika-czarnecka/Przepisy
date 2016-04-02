@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>KYNavigationProgress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A31841C2D22ED2DD2A9282B4F1F9C951</key>
+		<key>33966A1D197C1C7E5982708334A969E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8EB5C592163D4094AA1837D00A36AEB</key>
+		<key>481BC387DE25D3B227BFC575CA442B50</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4FA96C405CCF5BD581F84C2D219E556A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
