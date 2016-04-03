@@ -127,8 +127,8 @@
 			children = (
 				153D3EA61CAFDA8900FB06CC /* Constants.swift */,
 				156508FD1CAC791A0057D5D0 /* alarm.wav */,
-				15DBB7B51C93610700CE51BE /* AppDelegate.swift */,
 				15DBB7BC1C93610700CE51BE /* Assets.xcassets */,
+				15DBB7B51C93610700CE51BE /* AppDelegate.swift */,
 				15DBB7BE1C93610700CE51BE /* LaunchScreen.storyboard */,
 				15DBB7C11C93610700CE51BE /* Info.plist */,
 				15DBB7E31C93615500CE51BE /* MainViewController.swift */,

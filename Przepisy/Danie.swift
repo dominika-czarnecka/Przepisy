@@ -14,11 +14,11 @@ class Danie: NSObject {
     var danieImg: String!
     var danieOpis:String!
     var danieTytul: String!
-    var danieSklad: [String]!
+    var danieSklad: [skladnik]!
     var danieSprzet: [String]!
     var daniePrzepis: [krokPrzepisu]!
     
-    init(img: String, opis: String, tytul: String, sklad: [String], sprzet: [String], przepis: [krokPrzepisu]){
+    init(img: String, opis: String, tytul: String, sklad: [skladnik], sprzet: [String], przepis: [krokPrzepisu]){
         super.init()
         
         danieID = String(rand())
@@ -28,6 +28,28 @@ class Danie: NSObject {
         danieSklad = sklad
         danieSprzet = sprzet
         daniePrzepis = przepis
+    }
+}
+
+enum typp {
+    case g
+    case kg
+    case ml
+    case l
+    case sztuki
+    case opakowania
+}
+
+class skladnik: NSObject{
+    var nazwa: String!
+    var ilosc: Float!
+    var typ: typp!
+    
+    init(nazwa: String, ilosc: Float, typ: typp){
+        super.init()
+        self.nazwa = nazwa
+        self.ilosc = ilosc
+        self.typ = typ
     }
 }
 

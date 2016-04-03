@@ -8,10 +8,14 @@
 
 import UIKit
 import SDWebImage
+import EventKit
 
 class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
-    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let eventStore = EKEventStore()
+    var reminders: [EKReminder]?
+    var skladnikiDict: NSMutableDictionary!
     var danieID2: Int!
     let tableView1 = UITableView.init()
     var danie: Danie!
@@ -20,12 +24,20 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        defaults.removeObjectForKey(danie.danieID)
+        
+        if (defaults.objectForKey((danie?.danieID)!) != nil){
+            skladnikiDict = (defaults.objectForKey(danie.danieID) as! NSDictionary).mutableCopy() as! NSMutableDictionary
+        }else{
+            skladnikiDict = filldict()
+            saveDict()
+            
+        }
+        
         view.backgroundColor = UIColor.whiteColor()
         
         self.navigationItem.title = danie.danieTytul!
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        self.navigationController?.navigationBar.barTintColor = kColorMain
-        self.navigationController?.navigationBar.tintColor = kColorWhite
+        
         
         gotuj.translatesAutoresizingMaskIntoConstraints = false
         gotuj.setTitle("GOTUJ", forState: .Normal)
@@ -58,25 +70,28 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView1.deselectRowAtIndexPath(indexPath, animated: true)
         if(indexPath.section == 1){
             let cell = tableView.cellForRowAtIndexPath(indexPath)
-            if (defaults.boolForKey(danie.danieSklad[indexPath.row]) == false){
-                defaults.setBool(true, forKey: danie.danieSklad[indexPath.row])
+            
+            if ((skladnikiDict.objectForKey(danie.danieSklad[indexPath.row].nazwa) as! NSNumber).boolValue == false){
+                skladnikiDict.setObject(true, forKey: danie.danieSklad[indexPath.row].nazwa)
                 cell!.imageView?.image = UIImage.init(named: "circle.png")
-            }else{
-                defaults.setBool(false, forKey: danie.danieSklad[indexPath.row])
+            }
+            else{
+                skladnikiDict.setObject(false, forKey: danie.danieSklad[indexPath.row].nazwa)
                 cell!.imageView?.image = UIImage.init(named: "circle-2.png")
             }
-            print(indexPath.row, defaults.boolForKey(danie.danieSklad[indexPath.row]))
         }
         if(indexPath.section == 2){
             let cell = tableView.cellForRowAtIndexPath(indexPath)
-            if (defaults.boolForKey(danie.danieSprzet[indexPath.row]) == false){
-                defaults.setBool(true, forKey: danie.danieSprzet[indexPath.row])
+            if (skladnikiDict.objectForKey(danie.danieSprzet[indexPath.row]) as! Bool == false){
+                skladnikiDict.setObject(true, forKey: danie.danieSprzet[indexPath.row])
+                //defaults.setBool(true, forKey: danie.danieSprzet[indexPath.row])
                 cell!.imageView?.image = UIImage.init(named: "circle.png")
             }else{
-                defaults.setBool(false, forKey: danie.danieSprzet[indexPath.row])
+                skladnikiDict.setObject(false, forKey: danie.danieSprzet[indexPath.row])
                 cell!.imageView?.image = UIImage.init(named: "circle-2.png")
             }
         }
+        saveDict()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -113,10 +128,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.section == 0{
             if indexPath.row == 0{
                 let cell = tableView.dequeueReusableCellWithIdentifier("ImageTableViewCell", forIndexPath: indexPath) as? ImageTableViewCell
-                
-                cell?.awakeFromNib()
                 cell?.imageV.sd_setImageWithURL(NSURL.init(string: danie.danieImg))
-               // cell?.imageV.image = UIImage.init(named: danie.danieImg!)
+                cell!.selectionStyle = .None
+               // cell?.imageV.image = UIImage®.init(named: danie.danieImg!)
                 return cell!
             }
             if indexPath.row == 1{
@@ -130,23 +144,29 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
        let cell = tableView.dequeueReusableCellWithIdentifier("identyfikator", forIndexPath: indexPath)
-        if indexPath.section == 2{
-            cell.textLabel?.text = danie.danieSprzet[indexPath.row]
-            if(defaults.boolForKey(danie.danieSprzet[indexPath.row]) == true){
-                cell.imageView?.image = UIImage.init(named: "circle.png")
+        if(skladnikiDict) != nil{
+            if indexPath.section == 2{
+                cell.textLabel?.text = danie.danieSprzet[indexPath.row]
+                
+                if((skladnikiDict.objectForKey(danie.danieSprzet[indexPath.row]) as! NSNumber).boolValue == true){
+                    cell.imageView?.image = UIImage.init(named: "circle.png")
+                }else{
+                    cell.imageView?.image = UIImage.init(named: "circle-2.png")
+                }
             }else{
-                cell.imageView?.image = UIImage.init(named: "circle-2.png")
+                cell.textLabel?.text = danie.danieSklad[indexPath.row].nazwa
+                if (skladnikiDict.objectForKey(danie.danieSklad[indexPath.row].nazwa) as! Bool == true) {
+                    cell.imageView?.image = UIImage.init(named: "circle.png")
+                }else{
+                    cell.imageView?.image = UIImage.init(named: "circle-2.png")
+                }
             }
         }else{
-            cell.textLabel?.text = danie.danieSklad[indexPath.row]
-            if (defaults.boolForKey(danie.danieSklad[indexPath.row]) == true) {
-                cell.imageView?.image = UIImage.init(named: "circle.png")
-            }else{
-                cell.imageView?.image = UIImage.init(named: "circle-2.png")
-            }
-
+            cell.imageView?.image = UIImage.init(named: "circle-2.png")
+            
         }
-               return cell
+        saveDict()
+        return cell
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -169,10 +189,71 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func filldict() -> NSMutableDictionary{
+        let mDict:NSMutableDictionary = NSMutableDictionary()
+        for i in (0 ..< danie.danieSklad.count){
+            mDict.setObject(false, forKey: danie.danieSklad[i].nazwa)
+        }
+        for i in (0 ..< danie.danieSprzet.count){
+            mDict.setObject(false, forKey: danie.danieSprzet[i])
+        }
+        return mDict
+    }
+    
+    func saveDict(){
+        defaults.setObject(NSDictionary.init(dictionary: skladnikiDict), forKey: danie.danieID)
+        defaults.synchronize()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
+//    override func viewWillAppear(animated: Bool) {
+//        checkRemindersAuthorizationStatus()
+//    }
+//    
+//    func checkRemindersAuthorizationStatus() {
+//        let status = EKEventStore.authorizationStatusForEntityType(EKEntityType.Event)
+//        
+//        switch (status) {
+//        case EKAuthorizationStatus.NotDetermined:
+//            requestAccessToReminders()
+//        case EKAuthorizationStatus.Authorized:
+//            loadReminders()
+//            refreshTableView()
+//        case EKAuthorizationStatus.Restricted, EKAuthorizationStatus.Denied:
+//            requestAccessToReminders()
+//        }
+//    }
+//    
+//    func requestAccessToReminders() {
+//        eventStore.requestAccessToEntityType(EKEntityType.Event, completion: {
+//            (accessGranted: Bool, error: NSError?) in
+//            
+//            if accessGranted == true {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.loadReminders()
+//                    self.refreshTableView()
+//                })
+//            } else {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.requestAccessToReminders()
+//                })
+//            }
+//        })
+//    }
+//    
+//    func loadReminders() {
+//        self.reminders = eventStore.calendarsForEntityType(EKEntityType.Event)
+//    }
+//    
+//    func refreshTableView() {
+//       remindersTableView.hidden = false
+//        calendarsTableView.reloadData()
+//    }
+
+    
 }
